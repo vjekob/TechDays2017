@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.IO;
 using TechDays2017;
 using System.Drawing.Imaging;
 
-namespace ImageManipulationAzure
+namespace ImageManipulatorAzure
 {
     public static class ScaleAndCrop
     {
@@ -30,11 +31,12 @@ namespace ImageManipulationAzure
                     {
                         croppedBitmap.Save(tempStream2, ImageFormat.Png);
 
-                        var proc = new ImageProcessor.ImageFactory();
-                        proc.Load(tempStream2.ToArray()).RoundedCorners(150).Save(outStream);
+                        //var proc = new ImageProcessor.ImageFactory();
+                        //proc.Load(tempStream2.ToArray()).RoundedCorners(150).Save(outStream);
 
                         var result = new HttpResponseMessage(HttpStatusCode.OK);
-                        result.Content = new ByteArrayContent(outStream.ToArray());
+                        //result.Content = new ByteArrayContent(outStream.ToArray());
+                        result.Content = new ByteArrayContent(tempStream2.ToArray());
                         result.Content.Headers.Add("Content-Type", "application/octet-stream");
                         return result;
                     }
